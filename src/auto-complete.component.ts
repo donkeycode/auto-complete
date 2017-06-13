@@ -46,6 +46,7 @@ import { NguiAutoComplete } from "./auto-complete";
           [ngClass]="{selected: i === itemIndex}"
           [innerHtml]="autoComplete.getFormattedListItem(item)">
       </li>
+      <li *ngIf="withCreate" (mousedown)="createItem(keyword)">{{createText || 'Create: '}}{{keyword}}</li>
     </ul>
 
   </div>`,
@@ -124,8 +125,10 @@ export class NguiAutoCompleteComponent implements OnInit {
   @Input("show-dropdown-on-init") showDropdownOnInit: boolean = false;
   @Input("tab-to-select") tabToSelect: boolean = true;
   @Input("match-formatted") matchFormatted: boolean = false;
+  @Input("with-create") withCreate: boolean = false;
 
   @Output() valueSelected = new EventEmitter();
+  @Output() itemCreated = new EventEmitter();
   @ViewChild('autoCompleteInput') autoCompleteInput: ElementRef;
   @ViewChild('autoCompleteContainer') autoCompleteContainer: ElementRef;
 
@@ -194,7 +197,7 @@ export class NguiAutoCompleteComponent implements OnInit {
   }
 
   reloadList(keyword: string): void {
-
+    this.keyword = keyword;
     this.filteredList = [];
     if (keyword.length < (this.minChars || 0)) {
       this.minCharsEntered = false;
@@ -251,9 +254,13 @@ export class NguiAutoCompleteComponent implements OnInit {
     this.valueSelected.emit(data);
   };
 
+  createItem(data: string) {
+    let item: any = data;
+    this.itemCreated.emit(item);
+  }
+
   inputElKeyHandler = (evt: any) => {
     let totalNumItem = this.filteredList.length;
-
     switch (evt.keyCode) {
       case 27: // ESC, hide auto complete
         break;
