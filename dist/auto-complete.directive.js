@@ -16,6 +16,7 @@ var NguiAutoCompleteDirective = (function () {
         this.loadingText = "Loading";
         this.tabToSelect = true;
         this.matchFormatted = false;
+        this.withCreate = false;
         this.zIndex = "1";
         this.ngModelChange = new core_1.EventEmitter();
         this.valueChanged = new core_1.EventEmitter();
@@ -40,6 +41,7 @@ var NguiAutoCompleteDirective = (function () {
             component.noMatchFoundText = _this.noMatchFoundText;
             component.tabToSelect = _this.tabToSelect;
             component.matchFormatted = _this.matchFormatted;
+            component.withCreate = _this.withCreate;
             component.valueSelected.subscribe(_this.selectNewValue);
             _this.acDropdownEl = _this.componentRef.location.nativeElement;
             _this.acDropdownEl.style.display = "none";
@@ -97,7 +99,7 @@ var NguiAutoCompleteDirective = (function () {
             if (item && typeof item === "object") {
                 item = _this.setToStringFunction(item);
             }
-            _this.inputEl && (_this.inputEl.value = '' + item);
+            _this.renderValue(item);
             // make return value
             var val = item;
             if (_this.selectValueOf && item[_this.selectValueOf]) {
@@ -189,6 +191,7 @@ var NguiAutoCompleteDirective = (function () {
     NguiAutoCompleteDirective.prototype.ngOnChanges = function (changes) {
         if (changes['ngModel']) {
             this.ngModel = this.setToStringFunction(changes['ngModel'].currentValue);
+            this.renderValue(this.ngModel);
         }
     };
     NguiAutoCompleteDirective.prototype.setToStringFunction = function (item) {
@@ -216,11 +219,12 @@ var NguiAutoCompleteDirective = (function () {
             else {
                 displayVal_1 = item.value;
             }
-            item.toString = function () {
-                return displayVal_1;
-            };
+            item.toString = function () { return displayVal_1; };
         }
         return item;
+    };
+    NguiAutoCompleteDirective.prototype.renderValue = function (item) {
+        this.inputEl && (this.inputEl.value = '' + item);
     };
     NguiAutoCompleteDirective.decorators = [
         { type: core_1.Directive, args: [{
@@ -228,12 +232,12 @@ var NguiAutoCompleteDirective = (function () {
                 },] },
     ];
     /** @nocollapse */
-    NguiAutoCompleteDirective.ctorParameters = [
+    NguiAutoCompleteDirective.ctorParameters = function () { return [
         { type: core_1.ComponentFactoryResolver, },
         { type: core_1.Renderer, },
         { type: core_1.ViewContainerRef, },
         { type: forms_1.ControlContainer, decorators: [{ type: core_1.Optional }, { type: core_1.Host }, { type: core_1.SkipSelf },] },
-    ];
+    ]; };
     NguiAutoCompleteDirective.propDecorators = {
         'autoCompletePlaceholder': [{ type: core_1.Input, args: ["auto-complete-placeholder",] },],
         'source': [{ type: core_1.Input, args: ["source",] },],
@@ -251,6 +255,7 @@ var NguiAutoCompleteDirective = (function () {
         'valueFormatter': [{ type: core_1.Input, args: ["value-formatter",] },],
         'tabToSelect': [{ type: core_1.Input, args: ["tab-to-select",] },],
         'matchFormatted': [{ type: core_1.Input, args: ["match-formatted",] },],
+        'withCreate': [{ type: core_1.Input, args: ["with-create",] },],
         'ngModel': [{ type: core_1.Input },],
         'formControlName': [{ type: core_1.Input, args: ['formControlName',] },],
         'extFormControl': [{ type: core_1.Input, args: ['formControl',] },],

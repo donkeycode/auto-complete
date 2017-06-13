@@ -1,10 +1,10 @@
-import { ComponentRef, ViewContainerRef, EventEmitter, OnInit, ComponentFactoryResolver, Renderer, SimpleChanges } from "@angular/core";
+import { ComponentRef, ViewContainerRef, EventEmitter, OnInit, ComponentFactoryResolver, Renderer, SimpleChanges, OnChanges } from "@angular/core";
 import { NguiAutoCompleteComponent } from "./auto-complete.component";
 import { ControlContainer, AbstractControl, FormControl } from "@angular/forms";
 /**
  * display auto-complete section with input and dropdown list when it is clicked
  */
-export declare class NguiAutoCompleteDirective implements OnInit {
+export declare class NguiAutoCompleteDirective implements OnInit, OnChanges {
     private resolver;
     private renderer;
     viewContainerRef: ViewContainerRef;
@@ -25,6 +25,7 @@ export declare class NguiAutoCompleteDirective implements OnInit {
     valueFormatter: any;
     tabToSelect: boolean;
     matchFormatted: boolean;
+    withCreate: boolean;
     ngModel: String;
     formControlName: string;
     extFormControl: FormControl;
@@ -51,4 +52,5 @@ export declare class NguiAutoCompleteDirective implements OnInit {
     selectNewValue: (item: any) => void;
     private keydownEventHandler;
     private inputEventHandler;
+    private renderValue(item);
 }
