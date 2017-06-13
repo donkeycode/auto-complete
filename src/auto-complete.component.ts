@@ -46,7 +46,7 @@ import { NguiAutoComplete } from "./auto-complete";
           [ngClass]="{selected: i === itemIndex}"
           [innerHtml]="autoComplete.getFormattedListItem(item)">
       </li>
-      <li *ngIf="withCreate" (mousedown)="createItem(keyword)">{{createText || 'Create: '}}{{keyword}}</li>
+      <li *ngIf="withCreate && keyword && keyword !== ''" (mousedown)="createItem(keyword)">{{createText || 'Create: '}}{{keyword}}</li>
     </ul>
 
   </div>`,

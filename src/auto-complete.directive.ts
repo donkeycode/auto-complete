@@ -52,6 +52,7 @@ export class NguiAutoCompleteDirective implements OnInit, OnChanges {
 
   @Output() ngModelChange = new EventEmitter();
   @Output() valueChanged = new EventEmitter();
+  @Output() itemCreated = new EventEmitter();
 
 
   componentRef: ComponentRef<NguiAutoCompleteComponent>;
@@ -165,6 +166,7 @@ export class NguiAutoCompleteDirective implements OnInit, OnChanges {
     component.matchFormatted = this.matchFormatted;
     component.withCreate = this.withCreate;
     component.valueSelected.subscribe(this.selectNewValue);
+    component.itemCreated = this.itemCreated;
 
     this.acDropdownEl = this.componentRef.location.nativeElement;
     this.acDropdownEl.style.display = "none";
