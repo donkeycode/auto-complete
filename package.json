@@ -20,7 +20,7 @@
     "build:app": "NODE_ENV=prod webpack --config app/webpack.config"
   },
   "dependencies": {
-    "@ngui/utils": "^0.7.0"
+    "@ngui/utils": "^0.8.1"
   },
   "devDependencies": {
     "@angular/common": "^2.2.4",
